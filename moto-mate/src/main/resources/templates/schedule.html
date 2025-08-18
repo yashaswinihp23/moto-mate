@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Schedule Service</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50 p-6 font-sans">
+    <div class="max-w-6xl mx-auto bg-white p-6 rounded-xl shadow-md">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-2xl font-bold">Schedule Your Service</h1>
+        <p class="text-sm text-gray-500">
+          Choose your preferred date, time, and pickup option
+        </p>
+      </div>
+
+      <form
+        th:action="@{/schedule}"
+        th:object="${scheduleForm}"
+        method="post"
+        enctype="multipart/form-data"
+        class="grid gap-6 md:grid-cols-2"
+      >
+        <!-- Appointment Section -->
+        <div class="bg-gray-100 p-4 rounded-lg">
+          <h2 class="text-lg font-semibold mb-2">Appointment</h2>
+
+          <label class="block text-sm font-medium">Preferred Date *</label>
+          <input
+            type="date"
+            th:field="*{preferredDate}"
+            class="mt-1 w-full p-2 border rounded-lg"
+          />
+          <p
+            class="text-red-500 text-xs"
+            th:if="${#fields.hasErrors('preferredDate')}"
+            th:errors="*{preferredDate}"
+          ></p>
+
+          <label class="block text-sm font-medium mt-4">Time Slot *</label>
+          <div class="space-y-2 mt-2">
+            <label
+              ><input
+                type="radio"
+                th:field="*{timeSlot}"
+                value="Morning (9AM - 12PM)"
+              />
+              Morning (9AM - 12PM)</label
+            >
+            <br>
+            <label
+              ><input
+                type="radio"
+                th:field="*{timeSlot}"
+                value="Afternoon (12PM - 4PM)"
+              />
+              Afternoon (12PM - 4PM)</label
+            >
+            <br>
+            <label
+              ><input
+                type="radio"
+                th:field="*{timeSlot}"
+                value="Evening (4PM - 7PM)"
+              />
+              Evening (4PM - 7PM)</label
+            >
+            <br>
+            <p
+              class="text-red-500 text-xs"
+              th:if="${#fields.hasErrors('timeSlot')}"
+              th:errors="*{timeSlot}"
+            ></p>
+          </div>
+        </div>
+
+        <!-- Pickup Option -->
+        <div class="bg-gray-100 p-4 rounded-lg">
+          <h2 class="text-lg font-semibold mb-2">Pickup Options</h2>
+          <div class="space-y-4">
+            <label class="flex items-center gap-2">
+              <input type="radio" th:field="*{pickupOption}" value="drop" />
+              I’ll drop my vehicle
+              <span class="ml-auto text-green-600 font-medium">FREE</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input type="radio" th:field="*{pickupOption}" value="pickup" />
+              Request pickup service
+              <span class="ml-auto text-blue-600 font-medium">₹99</span>
+            </label>
+            <p
+              class="text-red-500 text-xs"
+              th:if="${#fields.hasErrors('pickupOption')}"
+              th:errors="*{pickupOption}"
+            ></p>
+          </div>
+        </div>
+
+        <!-- Additional Notes -->
+        <div class="bg-gray-100 p-4 rounded-lg">
+          <h2 class="text-lg font-semibold mb-2">Additional Notes</h2>
+          <textarea
+            th:field="*{notes}"
+            class="w-full p-2 border rounded-lg"
+            placeholder="Describe any specific issues..."
+          ></textarea>
+        </div>
+
+        <!-- Upload Photos -->
+        <div class="bg-gray-100 p-4 rounded-lg">
+          <h2 class="text-lg font-semibold mb-2">Upload Photos</h2>
+          <input type="file" th:field="*{photos}" multiple class="mt-2" />
+        </div>
+
+        <!-- Navigation -->
+        <div class="col-span-2 flex justify-between mt-4">
+          <a
+            href="/select-service"
+            class="px-4 py-2 border rounded-lg bg-white hover:bg-gray-200"
+            >Back</a
+          >
+          <button
+          	href="/confirmation"
+            type="submit"
+            class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Confirm Booking
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

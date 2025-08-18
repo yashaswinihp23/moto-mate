@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OTP Verification | Moto_Mate</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        box-sizing: border-box;
+        overflow-x: hidden;
+      }
+      body {
+        min-height: 100vh;
+        min-width: 100vw;
+        width: 100vw;
+        height: 100vh;
+        background: linear-gradient(135deg, #1e2a38 0%, #6c7ae0 100%);
+        font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow-x: hidden;
+      }
+      .otp-container {
+        background: #f7fafd;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px #6c7ae044;
+        padding: 40px 48px;
+        width: 80vw;
+        max-width: 420px;
+        min-width: 0;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        animation: fadeInUp 1.2s;
+        transition: box-shadow 0.3s, transform 0.3s;
+        justify-content: center;
+      }
+      .otp-container:hover {
+        box-shadow: 0 12px 40px #6c7ae066, 0 2px 8px #00000022;
+        transform: translateY(-2px) scale(1.01);
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .otp-title {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+        font-weight: 700;
+        color: #6c7ae0;
+        letter-spacing: 1px;
+        text-align: center;
+        transition: color 0.3s, text-shadow 0.3s;
+        cursor: pointer;
+        user-select: none;
+      }
+      .otp-title:hover {
+        color: #1e2a38;
+        text-shadow: 0 2px 12px #6c7ae040;
+        transform: scale(1.04);
+      }
+      .otp-subtitle {
+        font-size: 1rem;
+        margin-bottom: 24px;
+        color: #4a5a8a;
+        text-align: center;
+        line-height: 1.4;
+      }
+      .otp-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      .otp-input-container {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        margin-bottom: 8px;
+      }
+      .otp-input {
+        width: 50px;
+        height: 60px;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        border: 2px solid #b3c2f2;
+        border-radius: 10px;
+        background: #f7fafd;
+        color: #1e2a38;
+        outline: none;
+        transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+      }
+      .otp-input:focus {
+        border-color: #6c7ae0;
+        box-shadow: 0 0 0 3px #6c7ae040;
+        transform: scale(1.05);
+      }
+      .otp-input.error {
+        border-color: #e94057;
+        animation: shake 0.3s;
+      }
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        75% {
+          transform: translateX(5px);
+        }
+      }
+      .verify-btn {
+        padding: 15px 40px;
+        border: none;
+        border-radius: 30px;
+        background: linear-gradient(90deg, #6c7ae0 0%, #b3c2f2 100%);
+        color: #fff;
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        cursor: pointer;
+        box-shadow: 0 4px 16px #6c7ae044;
+        transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+        outline: none;
+        width: 100%;
+        max-width: 200px;
+      }
+      .verify-btn:hover {
+        background: linear-gradient(90deg, #b3c2f2 0%, #6c7ae0 100%);
+        color: #1e2a38;
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 8px 24px #6c7ae055;
+      }
+      .verify-btn:active {
+        transform: scale(0.98);
+        box-shadow: 0 2px 8px #6c7ae033;
+      }
+      .verify-btn:disabled {
+        background: #b3c2f2;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+      .resend-container {
+        margin-top: 20px;
+        text-align: center;
+      }
+      .resend-text {
+        color: #4a5a8a;
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+      }
+      .resend-btn {
+        background: none;
+        border: none;
+        color: #6c7ae0;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: underline;
+        transition: color 0.2s;
+      }
+      .resend-btn:hover {
+        color: #1e2a38;
+      }
+      .resend-btn:disabled {
+        color: #b3c2f2;
+        cursor: not-allowed;
+        text-decoration: none;
+      }
+      .timer {
+        color: #e94057;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+      .error-message {
+        color: #e94057;
+        font-size: 0.9rem;
+        text-align: center;
+        margin-top: 8px;
+        display: none;
+      }
+      .success-message {
+        color: #28a745;
+        font-size: 0.9rem;
+        text-align: center;
+        margin-top: 8px;
+        display: none;
+      }
+      @media (max-width: 600px) {
+        .otp-container {
+          padding: 30px 20px;
+          max-width: 95vw;
+          width: 95vw;
+        }
+        .otp-input-container {
+          gap: 8px;
+        }
+        .otp-input {
+          width: 45px;
+          height: 55px;
+          font-size: 1.3rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="otp-container">
+      <div class="message">
+        <h3 th:text="${session.pass}"></h3>
+        <h3 th:text="${session.fail}"></h3>
+        <span th:text="${@messageService.removeMessage()}"></span>
+      </div>
+      <div class="otp-title">OTP Verification</div>
+      <div class="otp-subtitle">
+        We've sent a 4-digit OTP to your email and mobile number.<br />
+        Please enter the code below to verify your account.
+      </div>
+
+      <form class="otp-form" id="otpForm" method="post" action="/verify-otp">
+        <!-- Choose OTP method -->
+  <div class="otp-method-choice" style="margin-bottom: 15px; text-align:center;">
+    <label>
+      <input type="radio" name="otpMethod" value="email" checked>
+      Send OTP via Email
+    </label>
+    <label style="margin-left: 15px;">
+      <input type="radio" name="otpMethod" value="mobile">
+      Send OTP via Mobile
+    </label>
+  </div>
+       
+        <div class="otp-input-container">
+          <input
+            type="text"
+            class="otp-input"
+            maxlength="1"
+            inputmode="numeric"
+          />
+          <input
+            type="text"
+            class="otp-input"
+            maxlength="1"
+            inputmode="numeric"
+          />
+          <input
+            type="text"
+            class="otp-input"
+            maxlength="1"
+            inputmode="numeric"
+          />
+          <input
+            type="text"
+            class="otp-input"
+            maxlength="1"
+            inputmode="numeric"
+          />
+        </div>
+
+        <!-- Hidden input for final OTP -->
+        <input type="hidden" name="otp" id="otp-hidden" />
+
+        <div class="error-message" id="errorMessage">
+          Invalid OTP. Please try again.
+        </div>
+        <div class="success-message" id="successMessage">
+          OTP verified successfully!
+        </div>
+
+        <button type="submit" class="verify-btn" id="verifyBtn">
+          Verify OTP
+        </button>
+      </form>
+
+      <div class="resend-container">
+        <div class="resend-text">Didn't receive the OTP?</div>
+        <button type="button" class="resend-btn" id="resendBtn">
+          Resend OTP
+        </button>
+        <div class="timer" id="timer"></div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const inputs = document.querySelectorAll(".otp-input");
+        const hiddenInput = document.getElementById("otp-hidden");
+        const form = document.getElementById("otpForm");
+
+        inputs.forEach((input, index) => {
+          input.addEventListener("input", () => {
+            if (input.value.length === 1 && index < inputs.length - 1) {
+              inputs[index + 1].focus();
+            }
+          });
+
+          input.addEventListener("keydown", (e) => {
+            if (
+              !e.key.match(/[0-9]/) &&
+              e.key !== "Backspace" &&
+              e.key !== "ArrowLeft" &&
+              e.key !== "ArrowRight"
+            ) {
+              e.preventDefault();
+            }
+
+            if (e.key === "Backspace" && input.value === "" && index > 0) {
+              inputs[index - 1].focus();
+            }
+          });
+        });
+
+        form.addEventListener("submit", (e) => {
+          let finalOtp = "";
+          inputs.forEach((input) => {
+            finalOtp += input.value;
+          });
+
+          hiddenInput.value = finalOtp;
+
+          // Optional: Prevent submission if OTP is incomplete
+          if (finalOtp.length < 4) {
+            e.preventDefault();
+            document.getElementById("errorMessage").style.display = "block";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

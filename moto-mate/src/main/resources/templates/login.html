@@ -1,0 +1,447 @@
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login - MotoMate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background: linear-gradient(135deg, #1e2a38 0%, #6c7ae0 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-container {
+            background: #f7fafd;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px #6c7ae044;
+            padding: 36px 44px 28px 44px;
+            width: 350px;
+            max-width: 95vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInUp 1.2s;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #6c7ae0;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .login-form input[type="email"],
+        .login-form input[type="password"] {
+            padding: 13px 16px;
+            border-radius: 10px;
+            border: 1.5px solid #b3c2f2;
+            background: #f7fafd;
+            color: #1e2a38;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: box-shadow 0.2s, border 0.2s, transform 0.2s, background 0.2s;
+            box-sizing: border-box;
+            width: 100%;
+            box-shadow: 0 2px 8px #6c7ae011;
+        }
+        .login-form input:focus, .login-form input:hover {
+            border: 2px solid #6c7ae0;
+            box-shadow: 0 0 0 3px #6c7ae040;
+            transform: scale(1.03);
+            background: #fff;
+        }
+        .login-btn {
+            margin-top: 8px;
+            padding: 13px 0;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(90deg, #6c7ae0 0%, #b3c2f2 100%);
+            color: #fff;
+            font-size: 1.12rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 4px 16px #6c7ae044;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            outline: none;
+        }
+        .login-btn:hover {
+            background: linear-gradient(90deg, #b3c2f2 0%, #6c7ae0 100%);
+            color: #1e2a38;
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 8px 24px #6c7ae055;
+        }
+        .error {
+            color: #e94057;
+            font-size: 0.98rem;
+            margin-bottom: 2px;
+            text-align: left;
+        }
+        .login-link {
+            margin-top: 10px;
+            color: #4a5a8a;
+            font-size: 1rem;
+            text-align: center;
+        }
+        .login-link a {
+            color: #6c7ae0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .login-link a:hover {
+            color: #1e2a38;
+            text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            .login-container {
+                padding: 18px 2vw 12px 2vw;
+                max-width: 98vw;
+            }
+            .login-title {
+                font-size: 1.08rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-title">Login to MotoMate</div>
+        <form class="login-form" th:action="@{/login}" th:object="${loginDto}" method="post">
+            <input type="email" th:field="*{email}" placeholder="Email" required />
+            <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            <input type="password" th:field="*{password}" placeholder="Password" required />
+            <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            <button type="submit" class="login-btn">Login</button>
+            <p th:if="${error}" class="error" th:text="${error}"></p>
+        </form>
+        <div class="login-link">
+            Don't have an account?
+            <a href="/register">Register</a>
+        </div>
+    </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Login - MotoMate</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", Arial, sans-serif;
+        background: linear-gradient(120deg, #232526 0%, #6c7ae0 100%);
+        min-height: 100vh;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .animated-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .circle {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.13;
+        animation: float 8s infinite alternate;
+        filter: blur(18px);
+      }
+      .circle1 {
+        width: 90px;
+        height: 90px;
+        background: #6c7ae0;
+        left: 8vw;
+        top: 18vh;
+        animation-delay: 0s;
+      }
+      .circle2 {
+        width: 60px;
+        height: 60px;
+        background: #fff;
+        left: 80vw;
+        top: 12vh;
+        animation-delay: 2s;
+      }
+      .circle3 {
+        width: 50px;
+        height: 50px;
+        background: #b3c2f2;
+        left: 65vw;
+        top: 80vh;
+        animation-delay: 4s;
+      }
+      .circle4 {
+        width: 70px;
+        height: 70px;
+        background: #fff;
+        left: 18vw;
+        top: 70vh;
+        animation-delay: 6s;
+      }
+      @keyframes float {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(1.2);
+        }
+      }
+      .login-container {
+        background: linear-gradient(135deg, #f7fafd 60%, #e3e8f0 100%);
+        border-radius: 28px;
+        box-shadow: 0 8px 32px #6c7ae044, 0 1.5px 8px #23252622;
+        border: 1.5px solid #e3e8f0;
+        padding: 38px 48px 32px 48px;
+        width: 370px;
+        max-width: 95vw;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        animation: fadeInUp 1.2s cubic-bezier(0.22, 0.68, 0.43, 1.01);
+        position: relative;
+        z-index: 2;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .login-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #6c7ae0;
+        letter-spacing: 2px;
+        margin-bottom: 18px;
+        text-align: center;
+        font-family: "Poppins", Arial, sans-serif;
+        animation: fadeInText 1.2s 0.3s both;
+      }
+      @keyframes fadeInText {
+        from {
+          opacity: 0;
+          letter-spacing: 12px;
+        }
+        to {
+          opacity: 1;
+          letter-spacing: 2px;
+        }
+      }
+      .login-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .login-form input[type="email"],
+      .login-form input[type="password"] {
+        padding: 14px 18px;
+        border-radius: 12px;
+        border: 1.5px solid #b3c2f2;
+        background: #f7fafd;
+        color: #1e2a38;
+        font-size: 1.08rem;
+        font-family: inherit;
+        outline: none;
+        transition: box-shadow 0.2s, border 0.2s, transform 0.2s,
+          background 0.2s;
+        box-sizing: border-box;
+        width: 100%;
+        box-shadow: 0 2px 8px #6c7ae011;
+      }
+      .login-form input:focus,
+      .login-form input:hover {
+        border: 2px solid #6c7ae0;
+        box-shadow: 0 0 0 4px #6c7ae040;
+        transform: scale(1.04);
+        background: #fff;
+      }
+      .login-btn {
+        margin-top: 10px;
+        padding: 15px 0;
+        border: none;
+        border-radius: 30px;
+        background: linear-gradient(90deg, #6c7ae0 0%, #b3c2f2 100%);
+        color: #fff;
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        cursor: pointer;
+        box-shadow: 0 4px 16px #6c7ae044;
+        transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+        width: 100%;
+        outline: none;
+        position: relative;
+        overflow: hidden;
+      }
+      .login-btn::after {
+        content: "";
+        position: absolute;
+        left: -75%;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.13);
+        transform: skewX(-20deg);
+        transition: left 0.4s;
+        pointer-events: none;
+      }
+      .login-btn:hover::after {
+        left: 120%;
+      }
+      .login-btn:hover {
+        background: linear-gradient(90deg, #b3c2f2 0%, #6c7ae0 100%);
+        color: #1e2a38;
+        transform: translateY(-2px) scale(1.04);
+        box-shadow: 0 8px 24px #6c7ae055;
+      }
+      .login-btn:active {
+        transform: scale(0.98);
+        box-shadow: 0 2px 8px #6c7ae033;
+      }
+      /* Ripple effect */
+      .ripple {
+        position: absolute;
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple 0.6s linear;
+        background-color: rgba(108, 122, 224, 0.25);
+        pointer-events: none;
+      }
+      @keyframes ripple {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+      .error {
+        color: #e94057;
+        font-size: 0.98rem;
+        margin-bottom: 2px;
+        text-align: left;
+      }
+      .login-link {
+        margin-top: 14px;
+        color: #4a5a8a;
+        font-size: 1rem;
+        text-align: center;
+      }
+      .login-link a {
+        color: #6c7ae0;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+      }
+      .login-link a:hover {
+        color: #1e2a38;
+        text-decoration: underline;
+      }
+      @media (max-width: 600px) {
+        .login-container {
+          padding: 18px 2vw 12px 2vw;
+          max-width: 98vw;
+        }
+        .login-title {
+          font-size: 1.08rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="animated-bg">
+      <div class="circle circle1"></div>
+      <div class="circle circle2"></div>
+      <div class="circle circle3"></div>
+      <div class="circle circle4"></div>
+    </div>
+    <div class="login-container">
+      <div class="login-title">Login to MotoMate</div>
+      <div class="message">
+        <h3 th:text="${session.pass}"></h3>
+        <h3 th:text="${session.fail}"></h3>
+        <span th:text="${@messageService.removeMessage()}"></span>
+      </div>
+      <form
+        class="login-form"
+        th:action="@{/login}"
+        th:object="${loginDto}"
+        method="post"
+      >
+        <input type="email" th:field="*{email}" placeholder="Email" required />
+        <div
+          class="error"
+          th:if="${#fields.hasErrors('email')}"
+          th:errors="*{email}"
+        ></div>
+        <input
+          type="password"
+          th:field="*{password}"
+          placeholder="Password"
+          required
+        />
+        <div
+          class="error"
+          th:if="${#fields.hasErrors('password')}"
+          th:errors="*{password}"
+        ></div>
+        <button type="submit" class="login-btn">Login</button>
+        <p th:if="${error}" class="error" th:text="${error}"></p>
+      </form>
+      <div class="login-link">
+        Don't have an account?
+        <a href="/register">Register</a>
+      </div>
+    </div>
+    <script>
+      // Ripple effect for login button
+      document.addEventListener("DOMContentLoaded", function () {
+        const btn = document.querySelector(".login-btn");
+        btn.addEventListener("click", function (e) {
+          const circle = document.createElement("span");
+          circle.classList.add("ripple");
+          const rect = btn.getBoundingClientRect();
+          circle.style.width = circle.style.height =
+            Math.max(rect.width, rect.height) + "px";
+          circle.style.left = e.clientX - rect.left - rect.width / 2 + "px";
+          circle.style.top = e.clientY - rect.top - rect.height / 2 + "px";
+          btn.appendChild(circle);
+          setTimeout(() => circle.remove(), 600);
+        });
+      });
+    </script>
+  </body>
+</html>

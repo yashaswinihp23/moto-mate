@@ -1,0 +1,388 @@
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MotoMate Booking Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+    body { background: linear-gradient(to bottom right, #f8fbff, #f2f6fc); padding: 2rem; color: #1a1a1a; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .top-banner {
+      background: white; border-radius: 1rem; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .top-banner h2 { color: #2563eb; font-size: 1.5rem; }
+    .top-banner p { color: #6b7280; margin-top: 0.5rem; }
+    .details-strip { display: flex; gap: 2rem; margin-top: 1rem; font-size: 0.9rem; color: #2563eb; }
+    .status { color: green; margin-left: auto; font-weight: 600; }
+    .header { text-align: center; margin-bottom: 2rem; }
+    .header h1 { font-size: 2rem; font-weight: 700; color: #0d1a26; }
+    .header p { color: #6b7280; margin-top: 0.5rem; }
+    .card { background: white; border-radius: 1rem; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
+    .card h2 { display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+    label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.25rem; }
+    input, select {
+      width: 100%; padding: 0.75rem; border: 1px solid #d1d5db;
+      border-radius: 0.5rem; margin-bottom: 1rem; font-size: 0.875rem;
+    }
+    .row { display: flex; gap: 1rem; }
+    .row > div { flex: 1; }
+    .verify-btn { padding: 0.75rem 1.5rem; border: 1px solid #d1d5db; border-radius: 0.5rem; background-color: #fff; cursor: pointer; margin-top: 1.75rem; }
+    .verify-btn:hover { background-color: #f3f4f6; }
+    .footer { display: flex; justify-content: space-between; margin-top: 2rem; }
+    .btn-back, .btn-next { padding: 0.75rem 2rem; border-radius: 0.5rem; font-weight: 600; border: none; cursor: pointer; }
+    .btn-back { background: #f3f4f6; }
+    .btn-next { background: #2563eb; color: white; }
+    .btn-next:hover { background: #1e40af; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-banner">
+      <h2>MotoMate</h2>
+      <p>Your trusted bike service experts</p>
+      <div class="details-strip">
+        <div>⭐ 4.9 (240+ reviews)</div>
+        <div>📍 123 Main Street, Business District</div>
+        <div>🕒 9AM-7PM Mon-Sat</div>
+        <div class="status">Open Now</div>
+      </div>
+    </div>
+
+    <div class="header">
+      <h1>Let's Get Started</h1>
+      <p>Tell us about yourself and your vehicle</p>
+    </div>
+
+    <form th:action="@{/service}" th:object="${booking}" method="post">
+      <div class="card">
+        <h2>👤 Customer Information</h2>
+        <div class="row">
+          <div>
+            <label for="fullName">Full Name *</label>
+            <input type="text" id="fullName" th:field="*{fullName}" required placeholder="Enter your full name" />
+            <div th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" style="color:red;"></div>
+          </div>
+          <div>
+            <label for="mobileNumber">Mobile Number *</label>
+            <div style="display: flex; gap: 0.5rem;">
+              <input type="tel" id="mobileNumber" th:field="*{mobileNumber}" pattern="[0-9]{10}" required placeholder="+91 XXXXXX XXXXX" />
+              <button type="button" class="verify-btn">Verify</button>
+            </div>
+            <div th:if="${#fields.hasErrors('mobileNumber')}" th:errors="*{mobileNumber}" style="color:red;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🚗 Vehicle Information</h2>
+        <div class="row">
+          <div>
+            <label for="bikeModel">Bike Make & Model *</label>
+            <select id="bikeModel" th:field="*{bikeModel}" required>
+             <b><option value="">Select your bike model</option></b> 
+              <option value="Honda Shine">Honda Shine</option>
+              <option value="Bajaj Pulsar">Bajaj Pulsar</option>
+              <option value="TVS Apache">TVS Apache</option>
+              <option value="Hero Splendor">Hero Splendor</option>
+            </select>
+            <div th:if="${#fields.hasErrors('bikeModel')}" th:errors="*{bikeModel}" style="color:red;"></div>
+          </div>
+          <div>
+            <label for="regNumber">Registration Number *</label>
+            <input type="text" id="regNumber" th:field="*{regNumber}" required placeholder="e.g., MH12AB1234" />
+            <div th:if="${#fields.hasErrors('regNumber')}" th:errors="*{regNumber}" style="color:red;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <a th:href="@{/}" class="btn-back">Back</a>
+        <button type="submit" class="btn-next">Continue</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MotoMate Booking Form</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: linear-gradient(to bottom right, #f8fbff, #f2f6fc);
+        padding: 2rem;
+        color: #1a1a1a;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .top-banner {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
+      .top-banner h2 {
+        color: #2563eb;
+        font-size: 1.5rem;
+      }
+      .top-banner p {
+        color: #6b7280;
+        margin-top: 0.5rem;
+      }
+      .details-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        color: #2563eb;
+        align-items: center;
+      }
+      .status {
+        margin-left: auto;
+        font-weight: 600;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      .header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #0d1a26;
+      }
+      .header p {
+        color: #6b7280;
+        margin-top: 0.5rem;
+      }
+      .card {
+        background: white;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
+      .card h2 {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        font-size: 0.875rem;
+      }
+      .row {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .row > div {
+        flex: 1;
+        min-width: 250px;
+      }
+      .verify-btn {
+        padding: 0.75rem 1.5rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        background-color: #fff;
+        cursor: pointer;
+        margin-top: 1.75rem;
+      }
+      .verify-btn:hover {
+        background-color: #f3f4f6;
+      }
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+        gap: 1rem;
+      }
+      .btn-back,
+      .btn-next {
+        padding: 0.75rem 2rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+      }
+      .btn-back {
+        background: #f3f4f6;
+      }
+      .btn-next {
+        background: #2563eb;
+        color: white;
+      }
+      .btn-next:hover {
+        background: #1e40af;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Top Banner -->
+      <div class="top-banner">
+        <h2>MotoMate</h2>
+        <p>Your trusted bike service experts</p>
+        <div class="details-strip">
+          <div>⭐ 4.9 (240+ reviews)</div>
+          <div>📍 123 Main Street, Business District</div>
+          <div>🕒 9AM-7PM Mon-Sat</div>
+          <div id="store-status" class="status">Loading...</div>
+        </div>
+      </div>
+
+      <!-- Header -->
+      <div class="header">
+        <h1>Let's Get Started</h1>
+        <p>Tell us about yourself and your vehicle</p>
+      </div>
+
+      <!-- Form -->
+      <form th:action="@{/service}" th:object="${booking}" method="post">
+        <!-- Customer Info -->
+        <div class="card">
+          <h2>👤 Customer Information</h2>
+          <div class="row">
+            <div>
+              <label for="fullName">Full Name *</label>
+              <input
+                type="text"
+                id="fullName"
+                th:field="*{fullName}"
+                required
+                placeholder="Enter your full name"
+              />
+              <div
+                th:if="${#fields.hasErrors('fullName')}"
+                th:errors="*{fullName}"
+                style="color: red"
+              ></div>
+            </div>
+            <div>
+              <label for="mobileNumber">Mobile Number *</label>
+              <div style="display: flex; gap: 0.5rem">
+                <input
+                  type="tel"
+                  id="mobileNumber"
+                  th:field="*{mobileNumber}"
+                  pattern="[0-9]{10}"
+                  required
+                  placeholder="+91 XXXXXXXXXX"
+                />
+                <button type="button" class="verify-btn">Verify</button>
+              </div>
+              <div
+                th:if="${#fields.hasErrors('mobileNumber')}"
+                th:errors="*{mobileNumber}"
+                style="color: red"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vehicle Info -->
+        <div class="card">
+          <h2>🚗 Vehicle Information</h2>
+          <div class="row">
+            <div>
+              <label for="bikeModel">Bike Make & Model *</label>
+              <select id="bikeModel" th:field="*{bikeModel}" required>
+                <option value="">Select your bike model</option>
+                <option value="Honda Shine">Honda Shine</option>
+                <option value="Bajaj Pulsar">Bajaj Pulsar</option>
+                <option value="TVS Apache">TVS Apache</option>
+                <option value="Hero Splendor">Hero Splendor</option>
+              </select>
+              <div
+                th:if="${#fields.hasErrors('bikeModel')}"
+                th:errors="*{bikeModel}"
+                style="color: red"
+              ></div>
+            </div>
+            <div>
+              <label for="regNumber">Registration Number *</label>
+              <input
+                type="text"
+                id="regNumber"
+                th:field="*{regNumber}"
+                required
+                placeholder="e.g., MH12AB1234"
+              />
+              <div
+                th:if="${#fields.hasErrors('regNumber')}"
+                th:errors="*{regNumber}"
+                style="color: red"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+          <a th:href="@{/}" class="btn-back">Back</a>
+          <button type="submit" class="btn-next">Continue</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Dynamic Open/Close Status -->
+    <script>
+      function updateStoreStatus() {
+        const openHour = 9;
+        const closeHour = 19;
+        const openDays = [1, 2, 3, 4, 5, 6]; // Mon-Sat
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentDay = now.getDay();
+        const statusElement = document.getElementById("store-status");
+
+        if (
+          openDays.includes(currentDay) &&
+          currentHour >= openHour &&
+          currentHour < closeHour
+        ) {
+          statusElement.textContent = "Open Now";
+          statusElement.style.color = "green";
+        } else {
+          statusElement.textContent = "Closed";
+          statusElement.style.color = "red";
+        }
+      }
+      updateStoreStatus();
+      setInterval(updateStoreStatus, 60000);
+    </script>
+  </body>
+</html>

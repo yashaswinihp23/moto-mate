@@ -1,0 +1,252 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f9fafb;
+  color: #1f2937;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1280px;
+  margin: auto;
+  padding: 1.5rem;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-icon {
+  background: linear-gradient(to right, #4f46e5, #3b82f6);
+  padding: 0.75rem;
+  border-radius: 1rem;
+  color: white;
+}
+
+.logo-icon.small {
+  padding: 0.5rem;
+}
+
+/* .auth-buttons button {
+  margin-left: 0.5rem;
+  
+
+} */
+.auth-buttons button {
+  padding: 10px 20px;
+  background-color: #4f46e5; /* Indigo shade */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+  transition: all 0.3s ease;
+  margin-right: 20px;
+  
+}
+
+.btn-auth:hover {
+  background-color: #4338ca; /* Darker indigo on hover */
+  box-shadow: 0 6px 12px rgba(67, 56, 202, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-auth:active {
+  transform: scale(0.98);
+  box-shadow: none;
+}
+
+
+/* Buttons */
+.btn {
+  border: none;
+  cursor: pointer;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  transition: 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn.primary {
+  background: linear-gradient(to right, #6366f1, #3b82f6);
+  color: white;
+}
+
+.btn.outline {
+  border: 2px solid #d1d5db;
+  background: transparent;
+  color: #1f2937;
+}
+
+.btn.outline.white {
+  border-color: white;
+  color: white;
+}
+
+.btn.light {
+  background: white;
+  color: #3b82f6;
+}
+
+/* Hero */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  padding: 4rem 0;
+}
+
+.hero-content h2 {
+  font-size: 3rem;
+  margin: 1rem 0;
+}
+
+.highlight {
+  color: transparent;
+  background: linear-gradient(to right, #6366f1, #3b82f6);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.stats div {
+  text-align: center;
+}
+
+.stats p {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #6366f1;
+}
+
+/* Card */
+.hero-visual .service-card,
+.feature-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.circle-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  background: linear-gradient(to right, #6366f1, #3b82f6);
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.rating i {
+  color: gold;
+}
+
+/* Features */
+.features {
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* CTA */
+.cta {
+  background: linear-gradient(to right, #6366f1, #3b82f6);
+  color: white;
+  padding: 4rem;
+  text-align: center;
+  border-radius: 1rem;
+  margin: 4rem 0;
+}
+
+/* Footer */
+.footer {
+  padding: 2rem 0;
+  text-align: center;
+  border-top: 1px solid #e5e7eb;
+}
+
+.footer .logo {
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Background Circles */
+.animated-background .circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.3;
+  animation: float 6s infinite ease-in-out;
+}
+
+.circle.delay0 {
+  width: 100px;
+  height: 100px;
+  top: 10%;
+  left: 10%;
+  background: #6366f1;
+}
+
+.circle.delay1 {
+  width: 140px;
+  height: 140px;
+  top: 30%;
+  right: 15%;
+  background: #3b82f6;
+  animation-delay: 1s;
+}
+
+.circle.delay2 {
+  width: 80px;
+  height: 80px;
+  bottom: 15%;
+  left: 25%;
+  background: #6366f1;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+

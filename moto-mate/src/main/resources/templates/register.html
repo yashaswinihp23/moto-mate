@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Moto_Mate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+        body {
+            min-height: 100vh;
+            min-width: 100vw;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e2a38 0%, #6c7ae0 100%);
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+        .register-container {
+            background: #f7fafd;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px #6c7ae044;
+            padding: 2px 48px 2px 48px;
+            width: 80vw;
+            max-width: 520px;
+            min-width: 0;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInUp 1.2s;
+            transition: box-shadow 0.3s, transform 0.3s;
+            justify-content: center;
+        }
+        .register-container:hover {
+            box-shadow: 0 12px 40px #6c7ae066, 0 2px 8px #00000022;
+            transform: translateY(-2px) scale(1.01);
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .register-title {
+            font-size: 1.3rem;
+            margin-bottom: 2px;
+            font-weight: 700;
+            color: #6c7ae0;
+            letter-spacing: 1px;
+            text-align: center;
+            transition: color 0.3s, text-shadow 0.3s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .register-title:hover {
+            color: #1e2a38;
+            text-shadow: 0 2px 12px #6c7ae040;
+            transform: scale(1.04);
+        }
+        .register-subtitle {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: #4a5a8a;
+            text-align: center;
+            transition: color 0.3s;
+        }
+        .register-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            margin-bottom: 4px;
+        }
+        label {
+            color: #1e2a38;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+            margin-bottom: 2px;
+        }
+        label:hover {
+            color: #6c7ae0;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"] {
+            padding: 13px 18px;
+            border-radius: 10px;
+            border: 1.5px solid #b3c2f2;
+            background: #f7fafd;
+            color: #1e2a38;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: box-shadow 0.2s, border 0.2s, transform 0.2s, background 0.2s;
+            box-sizing: border-box;
+            width: 100%;
+            box-shadow: 0 2px 8px #6c7ae011;
+        }
+        input:focus, input:hover {
+            border: 2px solid #6c7ae0;
+            box-shadow: 0 0 0 3px #6c7ae040;
+            transform: scale(1.03);
+            background: #fff;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            font-size: 0.98rem;
+        }
+        .checkbox-group input[type="checkbox"] {
+            accent-color: #6c7ae0;
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            transition: box-shadow 0.2s;
+        }
+        .checkbox-group input[type="checkbox"]:focus {
+            box-shadow: 0 0 0 2px #6c7ae040;
+        }
+        .checkbox-group label {
+            color: #4a5a8a;
+            font-weight: 500;
+            font-size: 0.98rem;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .checkbox-group label:hover {
+            color: #6c7ae0;
+        }
+        .register-btn {
+            margin-top: 12px;
+            padding: 15px 0;
+            border: none;
+            border-radius: 30px;
+            background: linear-gradient(90deg, #6c7ae0 0%, #b3c2f2 100%);
+            color: #fff;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 4px 16px #6c7ae044;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            outline: none;
+        }
+        .register-btn::after {
+            content: "";
+            position: absolute;
+            left: -75%;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: rgba(255,255,255,0.13);
+            transform: skewX(-20deg);
+            transition: left 0.4s;
+            pointer-events: none;
+        }
+        .register-btn:hover::after {
+            left: 120%;
+        }
+        .register-btn:hover {
+            background: linear-gradient(90deg, #b3c2f2 0%, #6c7ae0 100%);
+            color: #1e2a38;
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 8px 24px #6c7ae055;
+        }
+        .register-btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 8px #6c7ae033;
+        }
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            background-color: rgba(108,122,224,0.25);
+            pointer-events: none;
+        }
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        .login-link {
+            margin-top: 10px;
+            color: #4a5a8a;
+            font-size: 1rem;
+            text-align: center;
+        }
+        .login-link a {
+            color: #6c7ae0;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .login-link a:hover {
+            color: #1e2a38;
+            text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            .register-container {
+                padding: 2px 2vw 2px 2vw;
+                max-width: 98vw;
+                width: 98vw;
+                height: auto;
+            }
+            .register-title {
+                font-size: 1.08rem;
+            }
+            .register-form {
+                gap: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-title">Create Account</div>
+        <div class="register-subtitle">Join Moto_Mate and start your journey!</div>
+        <form class="register-form" autocomplete="off" method="post" action="/register" th:object="${userDto}">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" th:field="*{name}">
+                <span style="color: #e94057; font-size: 0.92em;" th:errors="*{name}"></span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" th:field="*{email}">
+                <span style="color: #e94057; font-size: 0.92em;" th:errors="*{email}"></span>
+            </div>
+            <div class="form-group">
+                <label for="mobile">Mobile Number</label>
+                <input type="tel" id="mobile" name="mobile" placeholder="Enter your mobile number" pattern="[0-9]{10}" maxlength="10" th:field="*{mobile}">
+                <span style="color: #e94057; font-size: 0.92em;" th:errors="*{mobile}"></span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Create a password" th:field="*{password}">
+                <span style="color: #e94057; font-size: 0.92em;" th:errors="*{password}"></span>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter your password" th:field="*{confirmPassword}">
+                <span style="color: #e94057; font-size: 0.92em;" th:errors="*{confirmPassword}"></span>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms" name="terms" th:field="*{terms}">
+                <label for="terms">I agree to the <a href="#" style="color:#6c7ae0;text-decoration:underline;">Terms & Conditions</a></label>
+                <span style="color: #e94057; font-size: 0.92em;" th:errors="*{terms}"></span>
+            </div>
+            <button type="submit" class="register-btn">Register</button>
+        </form>
+        <div class="login-link">
+            Already have an account?
+            <a href="/login">Login</a>
+        </div>
+    </div>
+    <script>
+        // Ripple effect for register button
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.querySelector('.register-btn');
+            btn.addEventListener('click', function(e) {
+                const circle = document.createElement('span');
+                circle.classList.add('ripple');
+                const rect = btn.getBoundingClientRect();
+                circle.style.width = circle.style.height = Math.max(rect.width, rect.height) + 'px';
+                circle.style.left = (e.clientX - rect.left - rect.width/2) + 'px';
+                circle.style.top = (e.clientY - rect.top - rect.height/2) + 'px';
+                btn.appendChild(circle);
+                setTimeout(() => circle.remove(), 600);
+            });
+        });
+    </script>
+</body>
+</html>

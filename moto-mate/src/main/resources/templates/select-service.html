@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Choose Your Services</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .form-wrapper {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 2.5rem 3rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-wrapper h2 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        .form-wrapper p {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+
+        .service-option {
+            border: 2px solid #cbd5e1;
+            padding: 14px 20px;
+            margin: 12px 0;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            background-color: #f8fafc;
+        }
+
+        .service-option:hover {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+        }
+
+        .service-option input[type="checkbox"] {
+            transform: scale(1.2);
+            margin-right: 12px;
+        }
+
+        .service-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            color: #0f172a;
+        }
+
+        .service-right {
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .popular {
+            font-size: 0.75rem;
+            background: #fde68a;
+            color: #92400e;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+
+        .form-wrapper .error {
+            color: red;
+            font-size: 0.875rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .total-cost {
+            font-weight: bold;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            text-align: center;
+            color: #1e3a8a;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1.5rem;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            text-decoration: none;
+            color: #64748b;
+        }
+
+        .back-button:hover {
+            color: #1e293b;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="form-wrapper">
+    <h2>Choose Your Services</h2>
+    <p>Select the services you need for your vehicle</p>
+
+
+    <form th:action="@{/select-service}" th:object="${serviceSelection}" method="post">
+    <label class="service-option">
+        <span class="service-left">
+            <input type="checkbox" th:field="*{selectedServices}" value="General Service" data-cost="499" />
+            General Service <span class="popular">★ Popular</span>
+        </span>
+        <span class="service-right">₹499</span>
+    </label>
+
+    <label class="service-option">
+        <span class="service-left">
+            <input type="checkbox" th:field="*{selectedServices}" value="Engine Work" data-cost="1299" />
+            Engine Work
+        </span>
+        <span class="service-right">₹1299</span>
+    </label>
+
+    <label class="service-option">
+        <span class="service-left">
+            <input type="checkbox" th:field="*{selectedServices}" value="Oil Change" data-cost="299" />
+            Oil Change
+        </span>
+        <span class="service-right">₹299</span>
+    </label>
+
+    <label class="service-option">
+        <span class="service-left">
+            <input type="checkbox" th:field="*{selectedServices}" value="Brake Service" data-cost="699" />
+            Brake Service
+        </span>
+        <span class="service-right">₹699</span>
+    </label>
+
+    <label class="service-option">
+        <span class="service-left">
+            <input type="checkbox" th:field="*{selectedServices}" value="Other Service" data-cost="200" id="otherService" />
+            Other Service
+        </span>
+        <span class="service-right">₹200+</span>
+    </label>
+
+    <!-- Fix error binding -->
+    <div class="error" th:if="${#fields.hasErrors('selectedServices')}" th:errors="*{selectedServices}"></div>
+
+    <div class="total-cost">
+        Total Estimated Cost: ₹<span id="totalCost">0</span><span id="plusSign"></span>
+    </div>
+
+    <button type="submit">Continue</button>
+
+    <a th:href="@{/service}" class="back-button">← Back</a>
+</form>
+
+   
+</div>
+
+<script>
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][data-cost]');
+    const totalCostEl = document.getElementById('totalCost');
+    const plusSignEl = document.getElementById('plusSign');
+
+    function updateTotalCost() {
+        let total = 0;
+        let otherServiceChecked = false;
+
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                total += parseInt(checkbox.getAttribute('data-cost'));
+                if (checkbox.id === "otherService") {
+                    otherServiceChecked = true;
+                }
+            }
+        });
+
+        totalCostEl.textContent = total;
+        plusSignEl.textContent = otherServiceChecked ? '+' : '';
+    }
+
+    checkboxes.forEach(cb => cb.addEventListener('change', updateTotalCost));
+</script>
+
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Choose Your Services</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .form-wrapper {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 2.5rem 3rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-wrapper h2 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        .form-wrapper p {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+
+        .service-option {
+            border: 2px solid #cbd5e1;
+            padding: 14px 20px;
+            margin: 12px 0;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            background-color: #f8fafc;
+        }
+
+        .service-option:hover {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+        }
+
+        .service-option input[type="checkbox"] {
+            transform: scale(1.2);
+            margin-right: 12px;
+        }
+
+        .service-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            color: #0f172a;
+        }
+
+        .service-right {
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .popular {
+            font-size: 0.75rem;
+            background: #fde68a;
+            color: #92400e;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+
+        .form-wrapper .error {
+            color: red;
+            font-size: 0.875rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .total-cost {
+            font-weight: bold;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            text-align: center;
+            color: #1e3a8a;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1.5rem;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            text-decoration: none;
+            color: #64748b;
+        }
+
+        .back-button:hover {
+            color: #1e293b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-wrapper">
+    <h2>Choose Your Services</h2>
+    <p>Select the services you need for your vehicle</p>
+
+    <form th:action="@{/select-service}" th:object="${serviceSelection}" method="post">
+
+        <div class="error" th:if="${#fields.hasErrors('selectedServices')}" 
+             th:errors="*{selectedServices}"></div>
+
+        <label class="service-option">
+            <span class="service-left">
+                <input type="checkbox" th:field="*{selectedServices}" value="General Service" />
+                General Service <span class="popular">★ Popular</span>
+            </span>
+            <span class="service-right">₹499</span>
+        </label>
+
+        <label class="service-option">
+            <span class="service-left">
+                <input type="checkbox" th:field="*{selectedServices}" value="Engine Work" />
+                Engine Work
+            </span>
+            <span class="service-right">₹1299</span>
+        </label>
+
+        <label class="service-option">
+            <span class="service-left">
+                <input type="checkbox" th:field="*{selectedServices}" value="Oil Change" />
+                Oil Change
+            </span>
+            <span class="service-right">₹299</span>
+        </label>
+
+        <label class="service-option">
+            <span class="service-left">
+                <input type="checkbox" th:field="*{selectedServices}" value="Brake Service" />
+                Brake Service
+            </span>
+            <span class="service-right">₹699</span>
+        </label>
+
+        <label class="service-option">
+            <span class="service-left">
+                <input type="checkbox" th:field="*{selectedServices}" value="Other Service" />
+                Other Service
+            </span>
+            <span class="service-right">Quote</span>
+        </label>
+
+        <div class="total-cost">
+            Total Estimated Cost: ₹<span th:text="*{estimatedCost} + '+'"></span>
+        </div>
+
+        <button type="submit">Continue</button>
+        <a href="#" class="back-button">← Back</a>
+    </form>
+</div>
+ <script>
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][name="services"]');
+    const totalCostDiv = document.getElementById('totalCost');
+
+    function calculateTotal() {
+      let total = 0;
+      checkboxes.forEach(cb => {
+        if (cb.checked) {
+          total += parseInt(cb.getAttribute('data-price'));
+        }
+      });
+      totalCostDiv.innerText = "Estimated Cost: ₹" + total;
+    }
+
+    checkboxes.forEach(cb => cb.addEventListener('change', calculateTotal));
+  </script>
+
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Choose Your Services</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .form-wrapper {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 2.5rem 3rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-wrapper h2 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        .form-wrapper p {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+
+        .service-option {
+            border: 2px solid #cbd5e1;
+            padding: 14px 20px;
+            margin: 12px 0;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            background-color: #f8fafc;
+        }
+
+        .service-option:hover {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+        }
+
+        .service-option input[type="checkbox"] {
+            transform: scale(1.2);
+            margin-right: 12px;
+        }
+
+        .service-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            color: #0f172a;
+        }
+
+        .service-right {
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .popular {
+            font-size: 0.75rem;
+            background: #fde68a;
+            color: #92400e;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 8px;
+        }
+
+        .form-wrapper .error {
+            color: red;
+            font-size: 0.875rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .total-cost {
+            font-weight: bold;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            text-align: center;
+            color: #1e3a8a;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1.5rem;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            text-decoration: none;
+            color: #64748b;
+        }
+
+        .back-button:hover {
+            color: #1e293b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-wrapper">
+    <h2>Choose Your Services</h2>
+    <p>Select the services you need for your vehicle</p>
+
+    <form id="serviceForm">
+        <label class="service-option">
+            <span class="service-left">
+                <input type="checkbox" class="service" data-cost="499" />
+                General Service <span class="popular">★ Popular</span>
+            </span>
+            <span class="service-right">₹499</span>
+        </label>
+
+        <label class="service-option">
+            <span class="service-left">
+                <input type="checkbox" class="service" data-cost="1299" />
+                Engine Work
+            </span>
+            <span class="service-right">₹1299</span>
+        </label>
+
+        <label class="service-option">
+            <span class="service-left">
+                <input type="checkbox" class="service" data-cost="299" />
+                Oil Change
+            </span>
+            <span class="service-right">₹299</span>
+        </label>
+
+        <label class="service-option">
+            <span class="service-left">
+                <input type="checkbox" class="service" data-cost="699" />
+                Brake Service
+            </span>
+            <span class="service-right">₹699</span>
+        </label>
+
+        <label class="service-option">
+            <span class="service-left">
+                <input type="checkbox" class="service" data-cost="200" id="otherService" />
+                Other Service
+            </span>
+            <span class="service-right">₹200+</span>
+        </label>
+
+        <div class="total-cost">
+            Total Estimated Cost: ₹<span id="totalCost">0</span><span id="plusSign"></span>
+        </div>
+
+        <button type="submit">Continue</button>
+        
+
+        <a th:href="@{/service}" class="back-button">← Back</a>
+    </form>
+</div>
+
+<script>
+    const checkboxes = document.querySelectorAll('.service');
+    const totalCostEl = document.getElementById('totalCost');
+    const plusSignEl = document.getElementById('plusSign');
+
+    function updateTotalCost() {
+        let total = 0;
+        let otherServiceChecked = false;
+
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                total += parseInt(checkbox.getAttribute('data-cost'));
+                if (checkbox.id === "otherService") {
+                    otherServiceChecked = true;
+                }
+            }
+        });
+
+        totalCostEl.textContent = total;
+        plusSignEl.textContent = otherServiceChecked ? '+' : '';
+    }
+
+    checkboxes.forEach(cb => cb.addEventListener('change', updateTotalCost));
+
+    document.getElementById('serviceForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Redirect to Schedule page
+        window.location.href = '/schedule';  // Adjust this path based on your Spring Boot route mapping
+    });
+</script>
+
+
+</body>
+</html> -->
+
+<!-- <a th:href="@{/bike-details}" style="
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 16px;
+    background-color: #6c757d;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+">← Back</a> -->

@@ -1,0 +1,29 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "MotoMateApplication",
+            "request": "launch",
+            "mainClass": "com.jsp.moto_mate.MotoMateApplication",
+            "projectName": "moto-mate",
+            // "env": {
+            //     //"PORT":80,
+            //     "DB_URL": "jdbc:mysql://localhost:3306/moto-mate",
+            //     "DB_UN":"root",
+            //     "DB_PASSWORD":"123456"
+            // }
+        }
+    ]
+}
